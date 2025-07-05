@@ -22,6 +22,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def send_morning_reminder(context):
     if CHAT_ID:
         await context.bot.send_message(chat_id=CHAT_ID, text="Доброе утро! ☀️ Как настроение?")
+async def test_morning(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await send_morning_reminder(context)
 
 async def send_evening_reminder(context):
     if CHAT_ID:
@@ -162,6 +164,7 @@ if __name__ == "__main__":
     )
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("test_morning", test_morning))
     app.add_handler(morning_conv)
     app.add_handler(evening_conv)
     
