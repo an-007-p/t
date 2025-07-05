@@ -14,11 +14,6 @@ from datetime import time
 
 CHAT_ID = None
 
-async def start_with_chat_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    global CHAT_ID
-    CHAT_ID = update.effective_chat.id
-    await update.message.reply_text("Включаю напоминания на 9:00 и 21:00")
-
 async def send_morning_reminder(context):
     if CHAT_ID:
         await context.bot.send_message(chat_id=CHAT_ID, text="Доброе утро! ☀️ Как настроение?")
@@ -37,10 +32,19 @@ EVENING_Q1, EVENING_Q2, EVENING_Q3, EVENING_Q4, EVENING_Q5, EVENING_Q6 = range(1
 logging.basicConfig(level=logging.INFO)
 
 # START
-async def start_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    global CHAT_ID
+    CHAT_ID = update.effective_chat.id
+
     await update.message.reply_text(
-        "Привет! Я помогу тебе отслеживать день 🌞 /morning — утренний чек-ин, 🌙 /evening — вечернее завершение дня."
-    )
+        "Привет! Я помогу тебе отслеживать день 🌞\n\n"
+        "Я буду отправлять тебе напоминания:\n"
+        "— в 9:00: утренний чек-ин\n"
+        "— в 21:00: вечерний отчёт\n\n"
+        "Команды:\n"
+        "/morning — утренний чек-ин\n"
+        "/evening — вечерний отчёт\n"
+        "/test_morning — протестировать утреннее напоминание"
     )
 
 # УТРО
@@ -164,8 +168,7 @@ if __name__ == "__main__":
         fallbacks=[CommandHandler("cancel", cancel)],
     )
 
-    app.add_handler(CommandHandler("start", start_with_chat_id))
-    app.add_handler(CommandHandler("info", start_info))  # или /help
+    app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("test_morning", test_morning))
     app.add_handler(morning_conv)
     app.add_handler(evening_conv)
