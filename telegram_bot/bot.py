@@ -9,12 +9,11 @@ from telegram.ext import (
     MessageHandler,
     filters,
 )
-from telegram.ext import ApplicationBuilder, CommandHandler
 from datetime import time
 
 CHAT_ID = None
 
-async def start(update, context):
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     global CHAT_ID
     CHAT_ID = update.effective_chat.id
     await update.message.reply_text("Включаю напоминния на 9:00 и 21:00")
