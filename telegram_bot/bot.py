@@ -16,7 +16,7 @@ CHAT_ID = None
 async def start(update, context):
     global CHAT_ID
     CHAT_ID = update.effective_chat.id
-    await update.message.reply_text(Включаю напоминния на 9:00 и 21:00)
+    await update.message.reply_text("Включаю напоминния на 9:00 и 21:00")
 
 async def send_morning_reminder(context):
     if CHAT_ID:
