@@ -23,7 +23,7 @@ async def send_morning_reminder(context):
     if CHAT_ID:
         await context.bot.send_message(chat_id=CHAT_ID, text="Доброе утро! ☀️ Как настроение?")
 async def test_morning(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await send_morning_reminder(context)
+    await update.message.reply_text("Тест: доброе утро!")
 
 async def send_evening_reminder(context):
     if CHAT_ID:
