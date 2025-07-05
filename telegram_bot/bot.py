@@ -9,6 +9,22 @@ from telegram.ext import (
     MessageHandler,
     filters,
 )
+from datetime import time
+
+CHAT_ID = None
+
+async def start(update, context):
+    global CHAT_ID
+    CHAT_ID = update.effective_chat.id
+    await update.message.reply_text(Включаю напоминния на 9:00 и 21:00)
+
+async def send_morning_reminder(context):
+    if CHAT_ID:
+        await context.bot.send_message(chat_id=CHAT_ID, text="Доброе утро! ☀️ Как настроение?")
+
+async def send_evening_reminder(context):
+    if CHAT_ID:
+        await context.bot.send_message(chat_id=CHAT_ID, text="Добрый вечер! 🌙 Как прошёл день?")
 
 # Этапы
 MORNING_1, MORNING_2, MORNING_3, MORNING_4, MORNING_5 = range(5)
@@ -147,6 +163,10 @@ if __name__ == "__main__":
     app.add_handler(CommandHandler("start", start))
     app.add_handler(morning_conv)
     app.add_handler(evening_conv)
+    
+    job_queue = app.job_queue
+    job_queue.run_daily(send_morning_reminder, time(hour=9, minute=0))
+    job_queue.run_daily(send_evening_reminder, time(hour=21, minute=0))
 
     print("Бот запущен...")
     app.run_polling()
