@@ -37,7 +37,7 @@ EVENING_Q1, EVENING_Q2, EVENING_Q3, EVENING_Q4, EVENING_Q5, EVENING_Q6 = range(1
 logging.basicConfig(level=logging.INFO)
 
 # START
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def start2 (update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Привет! Я помогу тебе отслеживать день 🌞 /morning — утренний чек-ин, 🌙 /evening — вечернее завершение дня."
     )
@@ -164,6 +164,7 @@ if __name__ == "__main__":
     )
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("start2", start2))
     app.add_handler(CommandHandler("test_morning", test_morning))
     app.add_handler(morning_conv)
     app.add_handler(evening_conv)
